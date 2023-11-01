@@ -32,6 +32,8 @@ function getBook(id) {
   return books.findIndex(book => book.id === Number(id));
 }
 
+// CRUD with Express
+
 app.get("/", (req, res) => {
   res.status(200).send("Node.js course");
 });
@@ -43,7 +45,7 @@ app.get("/books", (req, res) => {
 app.get("/books/:id", (req, res) => {
   const index = getBook(req.params.id);
   res.status(200).json(books[index]);
-})
+});
 
 app.post("/books", (req, res) => {
   books.push(req.body);
@@ -54,6 +56,12 @@ app.put("/books/:id", (req, res) => {
   const index = getBook(req.params.id);
   books[index].name = req.body.name;
   res.status(200).json(books);
-})
+});
+
+app.delete("/books/:id", (req, res) => {
+  const index = getBook(req.params.id);
+  books.splice(index, 1);
+  res.status(200).send("Book deleted with success");
+});
 
 export default app;
