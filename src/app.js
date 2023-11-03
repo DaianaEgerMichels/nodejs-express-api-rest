@@ -1,5 +1,6 @@
 import express from 'express';
 import connectInTheDataBase from './config/dbConnect.js';
+import book from './models/Book.js';
 
 const connection = await connectInTheDataBase();
 
@@ -16,42 +17,16 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-const books = [
-  {
-    id: 1,
-    name: 'As Crônicas de Gelo e Fogo',
-    genre: 'Fantasia',
-    author: {
-      name: 'George R. R. Martin',
-      birthYear: 1948
-    },
-    releaseYear: 1991
-  },
-  {
-    id: 2,
-    name: 'O Senhor dos Anéis',
-    genre: 'Fantasia',
-    author: {
-      name: 'J. R. R. Tolkien',
-      birthYear: 1892
-    },
-    releaseYear: 1954
-  }
-]
-
-function getBook(id) {
-  return books.findIndex(book => book.id === Number(id));
-}
-
 // CRUD with Express
 
 app.get("/", (req, res) => {
   res.status(200).send("Node.js course");
 });
 
-app.get("/books", (req, res) => {
-  res.status(200).json(books);
-});
+// app.get("/books", async (req, res) => {
+//   const listBooks = await book.find({});
+//   res.status(200).json(listBooks);
+// });
 
 app.get("/books/:id", (req, res) => {
   const index = getBook(req.params.id);
