@@ -11,7 +11,17 @@ class BookController {
       .status(500)
       .json({ message: `${error.message} - request failed` });
     }
-    
+  }
+
+  static async registerBook (req, res) {
+    try {
+      const newBook = await book.create(req.body);
+      res.status(201).json({ message: 'Book created with success', book: newBook });
+    } catch (error) {
+      res
+      .status(500)
+      .json({ message: `${error.message} - request failed` });
+    }
   }
 
 };

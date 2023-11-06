@@ -1,6 +1,6 @@
 import express from 'express';
 import connectInTheDataBase from './config/dbConnect.js';
-import book from './models/Book.js';
+import routes from '../routes/index.js';
 
 const connection = await connectInTheDataBase();
 
@@ -13,15 +13,16 @@ connection.once("open", () => {
 })
 
 const app = express();
+routes(app);
 
 // Middleware
-app.use(express.json());
+// app.use(express.json());
 
 // CRUD with Express
 
-app.get("/", (req, res) => {
-  res.status(200).send("Node.js course");
-});
+// app.get("/", (req, res) => {
+//   res.status(200).send("Node.js course");
+// });
 
 // app.get("/books", async (req, res) => {
 //   const listBooks = await book.find({});
