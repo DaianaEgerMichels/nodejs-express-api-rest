@@ -29,26 +29,26 @@ routes(app);
 //   res.status(200).json(listBooks);
 // });
 
-app.get("/books/:id", (req, res) => {
-  const index = getBook(req.params.id);
-  res.status(200).json(books[index]);
-});
+// app.get("/books/:id", (req, res) => {
+//   const index = getBook(req.params.id);
+//   res.status(200).json(books[index]);
+// });
 
-app.post("/books", (req, res) => {
-  books.push(req.body);
-  res.status(201).send("Book created");
-});
+// app.post("/books", (req, res) => {
+//   books.push(req.body);
+//   res.status(201).send("Book created");
+// });
 
-app.put("/books/:id", (req, res) => {
-  const index = getBook(req.params.id);
-  books[index].name = req.body.name;
-  res.status(200).json(books);
-});
+// app.put("/books/:id", (req, res) => {
+//   const index = getBook(req.params.id);
+//   books[index].name = req.body.name;
+//   res.status(200).json(books);
+// });
 
-app.delete("/books/:id", (req, res) => {
-  const index = getBook(req.params.id);
-  books.splice(index, 1);
-  res.status(200).send("Book deleted with success");
-});
+// app.delete("/books/:id", (req, res) => {
+//   const index = getBook(req.params.id);
+//   books.splice(index, 1);
+//   res.status(200).send("Book deleted with success");
+// });
 
 export default app;
