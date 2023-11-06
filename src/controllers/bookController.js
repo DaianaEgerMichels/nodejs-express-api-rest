@@ -2,6 +2,8 @@ import book from '../models/Book.js';
 
 class BookController {
 
+  //CRUD with mongoose
+
   static async getBooks (req, res) {
     try {
       const listBooks = await book.find({});
