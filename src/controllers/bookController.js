@@ -66,6 +66,18 @@ class BookController {
     }
   }
 
+  static async getBooksByEditor (req, res) {
+    const editor = req.query.editor;
+    try {
+      const getBooksByEditor = await book.find({ editor: editor });
+      res.status(200).json(getBooksByEditor);
+    } catch (error) {
+      res
+      .status(500)
+      .json({ message: `${error.message} - request failed` });
+    }
+  }
+
 };
 
 export default BookController;
