@@ -1,6 +1,6 @@
-import express from 'express';
-import connectInTheDataBase from './config/dbConnect.js';
-import routes from '../routes/index.js';
+import express from "express";
+import connectInTheDataBase from "./config/dbConnect.js";
+import routes from "../routes/index.js";
 
 const connection = await connectInTheDataBase();
 
@@ -10,7 +10,7 @@ connection.on("error", (error) => {
 
 connection.once("open", () => {
   console.log("Connected to the database");
-})
+});
 
 const app = express();
 routes(app);
