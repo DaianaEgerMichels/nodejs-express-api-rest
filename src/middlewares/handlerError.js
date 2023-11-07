@@ -4,11 +4,16 @@ function handlerError (error, req, res, next) {
   console.error(error); // for development
   if (error instanceof mongoose.Error.CastError) {
     res.status(400).json({ message: "Invalid id format" });
+  } else if (error instanceof mongoose.Error.ValidationError) {
+    const messageError = Object.values(error.errors)
+      .map((error) => error.message)
+      .join("; ");
+
+    res.status(400).send({ message: `The following errors were found: ${messageError}` });
+  } else {
+    res.status(500).send({ message: "Internal Server Error" });
   }
 
-  res
-    .status(500)
-    .json({ message: `${error.message} - Internal Server Error` });
 }
 
 export default handlerError;

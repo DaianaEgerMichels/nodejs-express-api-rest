@@ -16,7 +16,9 @@ connection.once("open", () => {
 const app = express();
 routes(app);
 
+// Middleware
 app.use(handlerError);
+
 // Middleware
 // app.use(express.json());
 
