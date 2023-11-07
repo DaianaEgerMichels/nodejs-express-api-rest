@@ -1,22 +1,19 @@
-import mongoose from "mongoose";
 import { author } from "../models/Author.js";
 
 class AuthorController {
 
   //CRUD with mongoose
   
-  static async getAuthors (req, res) {
+  static async getAuthors (req, res, next) {
     try {
       const listAuthors = await author.find({});
       res.status(200).json(listAuthors);
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `${error.message} - request failed` });
+      next(error);
     }
   }
   
-  static async getAuthorById (req, res) {
+  static async getAuthorById (req, res, next) {
     try {
       const id = req.params.id;
       const getAuthor = await author.findById(id);
@@ -28,48 +25,36 @@ class AuthorController {
       }
       
     } catch (error) {
-      if (error instanceof mongoose.Error.CastError) {
-        res.status(400).json({ message: "Invalid id format" });
-      }
-
-      res
-        .status(500)
-        .json({ message: `${error.message} - Internal Server Error` });
+      next(error);
     }
   }
   
-  static async registerAuthor (req, res) {
+  static async registerAuthor (req, res, next) {
     try {
       const newAuthor = await author.create(req.body);
       res.status(201).json({ message: "Author created with success", author: newAuthor });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `${error.message} - request failed` });
+      next(error);
     }
   }
   
-  static async updatedAuthor (req, res) {
+  static async updatedAuthor (req, res, next) {
     try {
       const id = req.params.id;
       await author.findByIdAndUpdate(id, req.body);
       res.status(200).json({ message: "Author updated with success" });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `${error.message} - updated failed` });
+      next(error);
     }
   }
   
-  static async deleteAuthor (req, res) {
+  static async deleteAuthor (req, res, next) {
     try {
       const id = req.params.id;
       await author.findByIdAndDelete(id);
       res.status(200).json({ message: "Author deleted with success" });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `${error.message} - delete failed` });
+      next(error);
     }
   }
   
