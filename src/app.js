@@ -2,6 +2,7 @@ import express from "express";
 import connectInTheDataBase from "./config/dbConnect.js";
 import routes from "../routes/index.js";
 import handlerError from "./middlewares/handlerError.js";
+import handler404 from "./middlewares/handler404.js";
 
 const connection = await connectInTheDataBase();
 
@@ -15,6 +16,9 @@ connection.once("open", () => {
 
 const app = express();
 routes(app);
+
+// Middleware
+app.use(handler404);
 
 // Middleware
 app.use(handlerError);

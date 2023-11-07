@@ -1,4 +1,5 @@
 import { author } from "../models/Author.js";
+import NotFound from "../errors/NotFound.js";
 
 class AuthorController {
 
@@ -21,7 +22,7 @@ class AuthorController {
       if (getAuthor !== null) {
         res.status(200).json(getAuthor);
       } else {
-        res.status(404).json({ message: "Author not found" });
+        next(new NotFound("Author not found"));
       }
       
     } catch (error) {
@@ -41,8 +42,12 @@ class AuthorController {
   static async updatedAuthor (req, res, next) {
     try {
       const id = req.params.id;
-      await author.findByIdAndUpdate(id, req.body);
-      res.status(200).json({ message: "Author updated with success" });
+      const authorUpdated =await author.findByIdAndUpdate(id, {$set: req.body});
+      if (authorUpdated !== null) {
+        res.status(200).json({ message: "Author updated with success" });
+      } else {
+        next(new NotFound("Author Id not found"));
+      }
     } catch (error) {
       next(error);
     }
@@ -51,8 +56,12 @@ class AuthorController {
   static async deleteAuthor (req, res, next) {
     try {
       const id = req.params.id;
-      await author.findByIdAndDelete(id);
-      res.status(200).json({ message: "Author deleted with success" });
+      const authorDeleted = await author.findByIdAndDelete(id);
+      if (authorDeleted !== null) {
+        res.status(200).json({ message: "Author deleted with success" });
+      } else {
+        next(new NotFound("Author Id not found"));
+      }
     } catch (error) {
       next(error);
     }
