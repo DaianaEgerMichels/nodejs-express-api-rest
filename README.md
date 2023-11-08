@@ -2,4 +2,4 @@
 
 ### Technologies used:
 
-```Node.js - Express - MongoDB```
+```Node.js - Express - MongoDB - Mongoose```
